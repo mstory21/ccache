@@ -1,14 +1,15 @@
 package ccache
 
 type Configuration struct {
-	maxSize        int64
-	buckets        int
-	itemsToPrune   int
-	deleteBuffer   int
-	promoteBuffer  int
-	getsPerPromote int32
-	tracking       bool
-	onDelete       func(item *Item)
+	maxSize            int64
+	buckets            int
+	itemsToPrune       int
+	deleteBuffer       int
+	promoteBuffer      int
+	getsPerPromote     int32
+	tracking           bool
+	onDelete           func(item *Item)
+	onlyPruneToMaxSize bool
 }
 
 // Creates a configuration object with sensible defaults
@@ -99,5 +100,12 @@ func (c *Configuration) Track() *Configuration {
 // cached object that require some kind of tear-down.
 func (c *Configuration) OnDelete(callback func(item *Item)) *Configuration {
 	c.onDelete = callback
+	return c
+}
+
+// OnlyPruneToMaxSize changes the behavior to only prune the number of items
+// needed to get back to the max size of the cache.
+func (c *Configuration) OnlyPruneToMaxSize() *Configuration {
+	c.onlyPruneToMaxSize = true
 	return c
 }

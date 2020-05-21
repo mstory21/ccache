@@ -1,4 +1,4 @@
-module github.com/karlseguin/ccache
+module github.com/mstory21/ccache/v2
 
 go 1.13
 

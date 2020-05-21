@@ -248,6 +248,9 @@ func (c *Cache) gc() int {
 		if element == nil {
 			return dropped
 		}
+		if c.onlyPruneToMaxSize && c.size <= c.maxSize {
+			return dropped
+		}
 		prev := element.Prev()
 		item := element.Value.(*Item)
 		if c.tracking == false || atomic.LoadInt32(&item.refCount) == 0 {
